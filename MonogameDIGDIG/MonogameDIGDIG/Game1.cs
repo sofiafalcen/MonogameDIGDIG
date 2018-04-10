@@ -11,6 +11,7 @@ namespace MonogameDIGDIG
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D playerTexture;
         
         public Game1()
         {
@@ -41,6 +42,8 @@ namespace MonogameDIGDIG
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            playerTexture = Content.Load<Texture2D>("player");
         }
 
         /// <summary>
@@ -76,7 +79,9 @@ namespace MonogameDIGDIG
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(playerTexture, Vector2.Zero, Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
