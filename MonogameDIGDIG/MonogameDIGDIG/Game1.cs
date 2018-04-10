@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace MonogameDIGDIG
 {
@@ -11,61 +13,84 @@ namespace MonogameDIGDIG
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D playerTexture;
+        Texture2D triangleTexture;
+        Player player;
+        Random random;
+        Rectangle triangleRectangle;
+        Vector2 moveDir;
+        Vector2 position;
+        Vector2 scale;
+        Vector2 offset;
+        Color triangleColor;
+        float speed;
+        float rotation;
+
         
+
+        int numEnemies;
+        List<Enemy> enemies;
+        Dictionary<string, Texture2D> textures;
+
+     
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+      
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
+            IsMouseVisible = true;
+            position = new Vector2(100, 100);
+            moveDir = new Vector2(1, 1);
+            speed = 300;
+            rotation = 0;
+            scale = new Vector2(1, 1);
+            triangleColor = Color.White;
+            offset = (triangleTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
+            triangleRectangle = new Rectangle((position - offset).ToPoint(), (triangleTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+      
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-
-            playerTexture = Content.Load<Texture2D>("player");
+            triangleTexture = Content.Load<Texture2D>("triangle");
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            MouseState mouseState = Mouse.GetState();
+            Vector2 mousePos = mouseState.Position.ToVector2();
+            moveDir = mousePos - position;
+            float pixelsToMove = speed * deltaTime;
+            if (moveDir != Vector2.Zero)
+            {
+                moveDir.Normalize();
+                rotation = (float)Math.Atan2(moveDir.Y, moveDir.X);
+                if (Vector2.Distance(position, mousePos) < pixelsToMove)
+                {
+                    position = mousePos;
+                }
+                else
+                {
+                    position += moveDir * pixelsToMove;
+                }
+                triangleRectangle.Location = (position - offset).ToPoint();
+            }
 
-            // TODO: Add your update logic here
+
+            triangleColor = Color.White;
+
 
             base.Update(gameTime);
         }
@@ -80,7 +105,7 @@ namespace MonogameDIGDIG
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(playerTexture, Vector2.Zero, Color.White);
+            spriteBatch.Draw(triangleTexture, position, null, triangleColor, rotation, offset, scale, SpriteEffects.None, 0);
             spriteBatch.End();
             base.Draw(gameTime);
         }

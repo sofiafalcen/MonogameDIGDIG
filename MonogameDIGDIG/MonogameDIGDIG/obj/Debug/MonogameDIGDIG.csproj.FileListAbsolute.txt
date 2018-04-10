@@ -16,3 +16,4 @@ C:\Users\wilma.berglund3\Documents\GitHub\MonogameDIGDIG\MonogameDIGDIG\Monogame
 C:\Users\wilma.berglund3\Documents\GitHub\MonogameDIGDIG\MonogameDIGDIG\MonogameDIGDIG\obj\Debug\MonogameDIGDIG.csprojResolveAssemblyReference.cache
 C:\Users\wilma.berglund3\Documents\GitHub\MonogameDIGDIG\MonogameDIGDIG\MonogameDIGDIG\obj\Debug\MonogameDIGDIG.exe
 C:\Users\wilma.berglund3\Documents\GitHub\MonogameDIGDIG\MonogameDIGDIG\MonogameDIGDIG\obj\Debug\MonogameDIGDIG.pdb
+C:\Users\wilma.berglund3\Documents\GitHub\MonogameDIGDIG\MonogameDIGDIG\MonogameDIGDIG\bin\DesktopGL\AnyCPU\Debug\Content\triangle.xnb
