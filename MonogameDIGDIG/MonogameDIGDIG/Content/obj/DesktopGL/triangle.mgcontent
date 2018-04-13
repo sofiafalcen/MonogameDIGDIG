@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/wilma.berglund3/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/triangle.png</SourceFile>
-  <SourceTime>2018-04-10T10:21:49.2375364+02:00</SourceTime>
-  <DestFile>C:/Users/wilma.berglund3/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bin/DesktopGL/triangle.xnb</DestFile>
-  <DestTime>2018-04-10T12:24:11.8555267+02:00</DestTime>
+  <SourceFile>C:/Users/sofia.falcenclou/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/triangle.png</SourceFile>
+  <SourceTime>2018-04-13T12:20:53.7798841+02:00</SourceTime>
+  <DestFile>C:/Users/sofia.falcenclou/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bin/DesktopGL/triangle.xnb</DestFile>
+  <DestTime>2018-04-13T12:23:57.7060717+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
