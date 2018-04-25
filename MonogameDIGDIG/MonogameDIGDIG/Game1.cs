@@ -13,11 +13,12 @@ namespace MonogameDIGDIG
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D triangleTexture;
+        Rectangle triangleRectangle;
+        Vector2 moveDir;
         Player player;
         Random random;
-        Texture2D triangleTexture;
-
-        
+        float speed;
 
         int numEnemies;
         List<Enemy> enemies;
@@ -35,6 +36,8 @@ namespace MonogameDIGDIG
         {
             base.Initialize();
             IsMouseVisible = true;
+            speed = 300;
+            triangleRectangle = triangleTexture.Bounds;
             player = new Player(triangleTexture);
           
       
@@ -56,6 +59,7 @@ namespace MonogameDIGDIG
         {
             player.Update(gameTime);
             base.Update(gameTime);
+
         }
 
       
