@@ -17,6 +17,7 @@ namespace MonogameDIGDIG
         Rectangle triangleRectangle;
         Vector2 moveDir;
         Player player;
+        Enemy enemy;
         Random random;
         float speed;
 
@@ -29,25 +30,30 @@ namespace MonogameDIGDIG
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            TextureLibrary.Init(Content);
         }
 
       
         protected override void Initialize()
         {
             base.Initialize();
+
+            player = new Player(triangleTexture, new Vector2(100, 50), 300, new Vector2(1, 1), 0, Color.White, 100, 10);
+            enemy = new Enemy(triangleTexture, new Vector2(100, 200), 300, new Vector2(1, 1), 0, Color.Blue);
+
             IsMouseVisible = true;
             speed = 300;
             triangleRectangle = triangleTexture.Bounds;
-            player = new Player(triangleTexture);
-          
-      
+
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             triangleTexture = Content.Load<Texture2D>("triangle");
+
+            TextureLibrary.LoadTexture("triangle");
         }
 
         protected override void UnloadContent()
@@ -57,7 +63,8 @@ namespace MonogameDIGDIG
 
         protected override void Update(GameTime gameTime)
         {
-            player.Update(gameTime);
+            player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
+            enemy.Update(gameTime, player);
             base.Update(gameTime);
 
         }
@@ -68,6 +75,7 @@ namespace MonogameDIGDIG
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             player.Draw(spriteBatch);
+            enemy.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
