@@ -4,12 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-<<<<<<< HEAD
     <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/triangle.png</File>
     <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bullet.jpg</File>
     <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/enemy.png</File>
-=======
-    <File>C:/Users/sofia.falcenclou/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/triangle.png</File>
->>>>>>> b93ece29082d30a033a5619cf6fcd493162af140
   </SourceFiles>
 </SourceFileCollection>
