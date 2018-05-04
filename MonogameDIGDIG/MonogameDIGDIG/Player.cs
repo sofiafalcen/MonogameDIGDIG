@@ -18,15 +18,14 @@ namespace MonogameDIGDIG
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
-        Color playerColor;
+        Color color;
         float speed;
         float rotation;
         float health;
         bool alive = true;
-        float attackSpeed;
-        float attackTimer;
+        MouseState prevMouseState;
 
-        public Player (Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
+        public Player (Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth)
         {
             texture = playerTexture;
             position = playerStartPos;
@@ -35,12 +34,11 @@ namespace MonogameDIGDIG
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
             rectangle = new Rectangle((position - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
-            playerColor = Color.White;
+            color = playerColor;
             rotation = playerRotation;
             health = playerHealth;
             alive = true;
-            attackSpeed = playerAttackSpeed;
-            attackTimer = 0;
+            prevMouseState = Mouse.GetState();
         }
 
         public void Update(float deltaTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
@@ -49,7 +47,7 @@ namespace MonogameDIGDIG
             {
                 //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 //KeyboardState keyboardState = Keyboard.GetState();
-                //moveDir = new Vector2();
+                moveDir = new Vector2();
                 if (keyboardState.IsKeyDown(Keys.Right))
                 {
                     moveDir.X = 1;
@@ -65,29 +63,23 @@ namespace MonogameDIGDIG
                     position += moveDir * speed * deltaTime;
                 }
 
-                attackTimer += deltaTime;
-                if (attackTimer <= attackSpeed)
-                {
-                    attackTimer += deltaTime;
-                }
-
-                if (mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
+                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                 {
                     Vector2 bulletDir = mouseState.Position.ToVector2() - position;
-                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, playerColor);
-                    attackTimer = 0;
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("bullet"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Bullet.Owner.Player, color);
                 }
             }
             else
             {
-                playerColor = Color.Black;
+                color = Color.Black;
             }
+
+            prevMouseState = mouseState;
         }
         
         public void Draw(SpriteBatch spriteBatch)
         {
-
-            spriteBatch.Draw(texture, position, null, playerColor, rotation, offset, scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, position, null, color, rotation, offset, scale, SpriteEffects.None, 0);
 
         }
     }

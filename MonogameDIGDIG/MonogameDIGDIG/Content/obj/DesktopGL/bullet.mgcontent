@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bullet.jpg</SourceFile>
-  <SourceTime>2018-04-24T10:09:34.4315977+02:00</SourceTime>
+  <SourceFile>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bullet.png</SourceFile>
+  <SourceTime>2018-05-04T13:41:14.5891767+02:00</SourceTime>
   <DestFile>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bin/DesktopGL/bullet.xnb</DestFile>
-  <DestTime>2018-04-25T15:10:18.6980036+02:00</DestTime>
+  <DestTime>2018-05-04T13:42:24.853299+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

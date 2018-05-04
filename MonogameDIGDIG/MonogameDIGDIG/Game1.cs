@@ -15,15 +15,20 @@ namespace MonogameDIGDIG
         SpriteBatch spriteBatch;
         Texture2D triangleTexture;
         Rectangle triangleRectangle;
+        Texture2D bulletTexture;
+        Rectangle bulletRectangle;
         Vector2 moveDir;
         Player player;
         Enemy enemy;
+        Bullet bullet;
         Random random;
         float speed;
 
         int numEnemies;
         List<Enemy> enemies;
         Dictionary<string, Texture2D> textures;
+        float enemySpawnTimer;
+        float lastSpawnTime;
 
      
         public Game1()
@@ -39,8 +44,10 @@ namespace MonogameDIGDIG
         {
             base.Initialize();
 
-            player = new Player(triangleTexture, new Vector2(100, 50), 300, new Vector2(1, 1), 0, Color.White, 100, 10);
+            player = new Player(triangleTexture, new Vector2(400, 415), 500, new Vector2(0.1f, 0.15f), 0, Color.White, 100);
             enemy = new Enemy(triangleTexture, new Vector2(100, 200), 300, new Vector2(1, 1), 0, Color.Blue);
+
+            enemies = new List<Enemy>();
 
             IsMouseVisible = true;
             speed = 300;
@@ -52,8 +59,9 @@ namespace MonogameDIGDIG
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             triangleTexture = Content.Load<Texture2D>("triangle");
-
+            TextureLibrary.LoadTexture("bullet");
             TextureLibrary.LoadTexture("triangle");
+            
         }
 
         protected override void UnloadContent()
@@ -65,6 +73,7 @@ namespace MonogameDIGDIG
         {
             player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
             enemy.Update(gameTime, player);
+            BulletManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds, player, new List<Enemy>());
             base.Update(gameTime);
 
         }
@@ -75,7 +84,8 @@ namespace MonogameDIGDIG
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             player.Draw(spriteBatch);
-            enemy.Draw(spriteBatch);
+            //enemy.Draw(spriteBatch);
+            BulletManager.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

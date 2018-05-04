@@ -5,7 +5,7 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/triangle.png</File>
-    <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bullet.jpg</File>
     <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/enemy.png</File>
+    <File>C:/Users/linn.nevrin/Documents/GitHub/MonogameDIGDIG/MonogameDIGDIG/MonogameDIGDIG/Content/bullet.png</File>
   </SourceFiles>
 </SourceFileCollection>
