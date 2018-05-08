@@ -61,8 +61,6 @@ namespace MonogameDIGDIG
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             triangleTexture = Content.Load<Texture2D>("triangle");
-
-
             TextureLibrary.LoadTexture("triangle");
 
         
