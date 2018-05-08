@@ -39,8 +39,10 @@ namespace MonogameDIGDIG
         {
             base.Initialize();
 
-            player = new Player(triangleTexture, new Vector2(100, 50), 300, new Vector2(1, 1), 0, Color.White, 100, 10);
-            enemy = new Enemy(triangleTexture, new Vector2(100, 200), 300, new Vector2(1, 1), 0, Color.Blue);
+            Randomizer.Init();
+
+            player = new Player(triangleTexture, new Vector2(400, 415), 500, new Vector2(0.1f, 0.15f), 0, Color.White, 100, 100);
+            enemy = new Enemy(triangleTexture, new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(1, 1), 0, Color.Blue);
 
             IsMouseVisible = true;
             speed = 300;
@@ -54,6 +56,8 @@ namespace MonogameDIGDIG
             triangleTexture = Content.Load<Texture2D>("triangle");
 
             TextureLibrary.LoadTexture("triangle");
+
+            TextureLibrary.LoadTexture("enemy");
         }
 
         protected override void UnloadContent()
@@ -76,6 +80,8 @@ namespace MonogameDIGDIG
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             enemy.Draw(spriteBatch);
+
+            BulletManager.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
