@@ -28,12 +28,12 @@ namespace MonogameDIGDIG
             speed = enemySpeed;
             moveDir = Vector2.Zero;
             scale = enemyScale;
-            offset = (enemyTexture.Bounds.Size.ToVector2()/ 2.0f) *scale;
+            offset = (enemyTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
             rectangle = new Rectangle((enemyStartPos - offset).ToPoint(), (enemyTexture.Bounds.Size.ToVector2() * enemyScale).ToPoint());
             color = enemyColor;
             rotation = enemyRotation;
         }
-
+        
         public void Update(GameTime gameTime, Player player)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
