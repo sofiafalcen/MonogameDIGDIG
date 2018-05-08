@@ -17,12 +17,14 @@ namespace MonogameDIGDIG
         Rectangle triangleRectangle;
         Texture2D bulletTexture;
         Rectangle bulletRectangle;
+        Texture2D enemyTexture;
         Vector2 moveDir;
         Player player;
         Enemy enemy;
         Bullet bullet;
         Random random;
         float speed;
+
 
         int numEnemies;
         List<Enemy> enemies;
@@ -47,9 +49,8 @@ namespace MonogameDIGDIG
             Randomizer.Init();
 
             player = new Player(triangleTexture, new Vector2(400, 415), 500, new Vector2(0.1f, 0.15f), 0, Color.White, 100);
-            enemy = new Enemy(triangleTexture, new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(1, 1), 0, Color.Blue);
+            enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White);
 
-            enemies = new List<Enemy>();
 
             IsMouseVisible = true;
             speed = 300;
@@ -60,9 +61,14 @@ namespace MonogameDIGDIG
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             triangleTexture = Content.Load<Texture2D>("triangle");
-            TextureLibrary.LoadTexture("bullet");
             TextureLibrary.LoadTexture("triangle");
+
+        
+            TextureLibrary.LoadTexture("bullet");
+
+           
             TextureLibrary.LoadTexture("enemy");
         }
 
@@ -70,7 +76,7 @@ namespace MonogameDIGDIG
         {
             // TODO: Unload any non ContentManager content here
         }
-
+        
         protected override void Update(GameTime gameTime)
         {
             player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
