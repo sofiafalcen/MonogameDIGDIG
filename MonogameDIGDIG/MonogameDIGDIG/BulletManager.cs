@@ -19,7 +19,7 @@ namespace MonogameDIGDIG
         public static void Update(float deltaTime, Player player, List<Enemy> enemies)
         {
             for(int i = bullets.Count - 1; i >= 0; i--)
-            {
+            { 
                 if (bullets[i].GetIsAlive())
                 {
                     bullets[i].Update(deltaTime);
