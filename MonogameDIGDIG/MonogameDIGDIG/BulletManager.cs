@@ -11,7 +11,7 @@ namespace MonogameDIGDIG
     static class BulletManager
     {
         static List<Bullet> bullets = new List<Bullet>();
-        public static void AddBullet(Texture2D texture, Vector2 startPosition, Vector2 dir, float speed, Vector2 scale, Bullet.Owner owner, Color color)
+        public static void AddBullet(Texture2D texture, Vector2 startPosition, Vector2 dir, float speed, Vector2 scale, Owner owner, Color color)
         {
             bullets.Add(new Bullet(texture, startPosition, dir, speed, scale, owner, color));
         }
@@ -23,11 +23,11 @@ namespace MonogameDIGDIG
                 if (bullets[i].GetIsAlive())
                 {
                     bullets[i].Update(deltaTime);
-                    Bullet.Owner owner = bullets[i].GetOwner();
+                    Owner owner = bullets[i].GetOwner();
                     float damage = 0;
                     switch(owner)
                     {
-                        case Bullet.Owner.Player:
+                        case Owner.Player:
                             for(int j = 0; j < enemies.Count; j++)
                             {
                                 damage = bullets[i].Damage(enemies[j].GetRectangle());

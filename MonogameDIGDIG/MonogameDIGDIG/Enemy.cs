@@ -20,6 +20,7 @@ namespace MonogameDIGDIG
         float speed;
         float rotation;
 
+
         public Enemy(Texture2D enemyTexture, Vector2 enemyStartPos, float enemySpeed, Vector2 enemyScale, float enemyRotation, Color enemyColor)
         {
             texture = enemyTexture;

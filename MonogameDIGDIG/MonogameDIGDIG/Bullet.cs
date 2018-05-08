@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonogameDIGDIG
 {
-       class Bullet
+    enum Owner { Player };
+    class Bullet
     {
-        public enum Owner { Player };
         Owner owner;
         Texture2D texture;
         Rectangle rectangle;
