@@ -65,10 +65,8 @@ namespace MonogameDIGDIG
 
             TextureLibrary.LoadTexture("triangle");
 
-        
             TextureLibrary.LoadTexture("bullet");
-
-             
+            
             TextureLibrary.LoadTexture("enemy");
         }
 
