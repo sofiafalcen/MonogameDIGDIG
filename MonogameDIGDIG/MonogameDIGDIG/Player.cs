@@ -12,54 +12,82 @@ namespace MonogameDIGDIG
     class Player
     {
  
-        Texture2D triangleTexture;
-        Rectangle triangleRectangle;
+        Texture2D texture;
+        Rectangle rectangle;
         Vector2 moveDir;
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
-        Color triangleColor;
+        Color playerColor;
         float speed;
         float rotation;
+        float health;
+        bool alive = true;
+        float attackSpeed;
+        float attackTimer;
 
-        public Player (Texture2D playerTexture)
+        public Player (Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
         {
-            triangleTexture = playerTexture;
-            position = new Vector2(100, 400);
-            moveDir = new Vector2(1, 1);
-            speed = 300;
-            rotation = 0;
-            scale = new Vector2(0.12f, 0.2f);
-            triangleColor = Color.White;
-            offset = (triangleTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            triangleRectangle = new Rectangle((position - offset).ToPoint(), (triangleTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            texture = playerTexture;
+            position = playerStartPos;
+            speed = playerSpeed;
+            moveDir = Vector2.Zero;
+            scale = playerScale;
+            offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
+            rectangle = new Rectangle((position - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            playerColor = Color.White;
+            rotation = playerRotation;
+            health = playerHealth;
+            alive = true;
+            attackSpeed = playerAttackSpeed;
+            attackTimer = 0;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float deltaTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            KeyboardState keyboardState = Keyboard.GetState();
-            moveDir = new Vector2();
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (alive)
             {
-                moveDir.X = 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                moveDir.X = -1;
-            }
-            if (moveDir != Vector2.Zero)
-            {
-                moveDir.Normalize();
+                //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                //KeyboardState keyboardState = Keyboard.GetState();
+                //moveDir = new Vector2();
+                if (keyboardState.IsKeyDown(Keys.Right))
+                {
+                    moveDir.X = 1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Left))
+                {
+                    moveDir.X = -1;
+                }
+                if (moveDir != Vector2.Zero)
+                {
+                    moveDir.Normalize();
 
-                position += moveDir * speed * deltaTime;
+                    position += moveDir * speed * deltaTime;
+                }
+
+                attackTimer += deltaTime;
+                if (attackTimer <= attackSpeed)
+                {
+                    attackTimer += deltaTime;
+                }
+
+                if (mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
+                {
+                    Vector2 bulletDir = mouseState.Position.ToVector2() - position;
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, playerColor);
+                    attackTimer = 0;
+                }
+            }
+            else
+            {
+                playerColor = Color.Black;
             }
         }
         
         public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(triangleTexture, position, null, triangleColor, rotation, offset, scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, position, null, playerColor, rotation, offset, scale, SpriteEffects.None, 0);
 
         }
     }
