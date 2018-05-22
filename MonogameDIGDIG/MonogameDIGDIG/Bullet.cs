@@ -18,13 +18,14 @@ namespace MonogameDIGDIG
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
+        Point windowSize;
         Color color;
         float speed;
         float rotation;
         float damage;
         bool alive;
 
-        public Bullet(Texture2D bulletTexture, Vector2 bulletStartPos, Vector2 bulletDir, float bulletSpeed, Vector2 bulletScale, Owner bulletOwner, Color bulletColor)
+        public Bullet(Texture2D bulletTexture, Vector2 bulletStartPos, Vector2 bulletDir, float bulletSpeed, Vector2 bulletScale, Owner bulletOwner, Color bulletColor, Point aWindowSize)
         {
             texture = bulletTexture;
             position = bulletStartPos;
@@ -39,12 +40,18 @@ namespace MonogameDIGDIG
             damage = 100;
             alive = true;
             owner = bulletOwner;
+            windowSize = aWindowSize;
         }
 
         public void Update(float deltaTime)
         {
             position += moveDir * speed * deltaTime;
             rectangle.Location = (position - offset * scale).ToPoint();
+
+            if(position.X <= 0 || position.X >= windowSize.X || position.Y <= 0 || position.Y >= windowSize.Y)
+            {
+                alive = false;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

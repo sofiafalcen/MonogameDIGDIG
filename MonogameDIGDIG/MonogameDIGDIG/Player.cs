@@ -14,11 +14,12 @@ namespace MonogameDIGDIG
  
         Texture2D texture;
         Rectangle rectangle;
-        Vector2 moveDir;
+        Color playerColor;
+        //Vector2 moveDir;
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
-        Color playerColor;
+        Point windowSize;
         float speed;
         float rotation;
         float health;
@@ -26,16 +27,16 @@ namespace MonogameDIGDIG
         float attackSpeed;
         float attackTimer;
 
-        public Player (Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
+        public Player (Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color color, float playerHealth, float playerAttackSpeed)
         {
             texture = playerTexture;
             position = playerStartPos;
             speed = playerSpeed;
-            moveDir = Vector2.Zero;
+            //moveDir = Vector2.Zero;
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
             rectangle = new Rectangle((position - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
-            playerColor = Color.White;
+            playerColor = color;
             rotation = playerRotation;
             health = playerHealth;
             alive = true;
@@ -45,6 +46,7 @@ namespace MonogameDIGDIG
 
         public void Update(float deltaTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
         {
+
             if (alive)
             {
                 //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -52,18 +54,20 @@ namespace MonogameDIGDIG
                 //moveDir = new Vector2();
                 if (keyboardState.IsKeyDown(Keys.Right))
                 {
-                    moveDir.X = 1;
+                    //moveDir.X = 1;
+                    position.X += speed * deltaTime;
                 }
                 if (keyboardState.IsKeyDown(Keys.Left))
                 {
-                    moveDir.X = -1;
+                    //moveDir.X = -1;
+                    position.X -= speed * deltaTime;
                 }
-                if (moveDir != Vector2.Zero)
-                {
-                    moveDir.Normalize();
+                //if (moveDir != Vector2.Zero)
+                //{
+                //    moveDir.Normalize();
 
-                    position += moveDir * speed * deltaTime;
-                }
+                //    position += moveDir * speed * deltaTime;
+                //}
 
                 attackTimer += deltaTime;
                 if (attackTimer <= attackSpeed)
@@ -74,7 +78,7 @@ namespace MonogameDIGDIG
                 if (mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
                 {
                     Vector2 bulletDir = mouseState.Position.ToVector2() - position;
-                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, playerColor);
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, Color.White);
                     attackTimer = 0;
                 }
             }

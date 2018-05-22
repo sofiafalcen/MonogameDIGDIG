@@ -44,24 +44,26 @@ namespace MonogameDIGDIG
         protected override void Initialize()
         {
             base.Initialize();
-
             Randomizer.Init();
 
-            player = new Player(triangleTexture, new Vector2(400, 415), 500, new Vector2(0.1f, 0.15f), 0, Color.White, 100, 100);
+            player = new Player(triangleTexture, new Vector2(0, 400), 500, new Vector2(0.1f, 0.1f), 0, Color.White, 100, 1);
             enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White);
+            enemies = new List<Enemy>();
 
             IsMouseVisible = true;
             speed = 300;
             triangleRectangle = triangleTexture.Bounds;
 
+            BulletManager.SetWindowsize(Window.ClientBounds.Size);
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            triangleTexture = Content.Load<Texture2D>("triangle");
+          
 
+            triangleTexture = Content.Load<Texture2D>("triangle");
 
             TextureLibrary.LoadTexture("triangle");
 
@@ -77,10 +79,11 @@ namespace MonogameDIGDIG
         
         protected override void Update(GameTime gameTime)
         {
-            player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            player.Update(deltaTime, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
             enemy.Update(gameTime, player);
-            base.Update(gameTime);
-
+            BulletManager.Update(deltaTime, player, enemies);
+            base.Update(gameTime);         
         }
 
       

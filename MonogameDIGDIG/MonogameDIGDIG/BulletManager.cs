@@ -11,9 +11,11 @@ namespace MonogameDIGDIG
     static class BulletManager
     {
         static List<Bullet> bullets = new List<Bullet>();
+        static Point windowSize;
+
         public static void AddBullet(Texture2D texture, Vector2 startPosition, Vector2 dir, float speed, Vector2 scale, Owner owner, Color color)
         {
-            bullets.Add(new Bullet(texture, startPosition, dir, speed, scale, owner, color));
+            bullets.Add(new Bullet(texture, startPosition, dir, speed, scale, owner, Color.White, windowSize));
         }
 
         public static void Update(float deltaTime, Player player, List<Enemy> enemies)
@@ -48,6 +50,11 @@ namespace MonogameDIGDIG
             {
                 bullets[i].Draw(spriteBatch);
             }
+        }
+
+        public static void SetWindowsize(Point aWindowSize)
+        {
+            windowSize = aWindowSize;
         }
     }
 }
