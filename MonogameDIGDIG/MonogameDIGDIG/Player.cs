@@ -81,7 +81,7 @@ namespace MonogameDIGDIG
                 if (mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
                 {
                     Vector2 bulletDir = mouseState.Position.ToVector2() - position;
-                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, Color.White);
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.05f, 0.05f), Owner.Player, Color.White);
                     attackTimer = 0;
                 }
 

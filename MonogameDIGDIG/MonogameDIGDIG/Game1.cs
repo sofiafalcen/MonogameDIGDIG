@@ -48,7 +48,7 @@ namespace MonogameDIGDIG
             Randomizer.Init();
 
             player = new Player(triangleTexture, new Vector2(0, 400), 500, new Vector2(0.1f, 0.1f), 0, Color.White, 100, 1);
-            enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 100);
+            enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.3f, 0.3f), 0, Color.White, 100);
             enemies = new List<Enemy>();
 
             IsMouseVisible = true;
@@ -85,7 +85,7 @@ namespace MonogameDIGDIG
 
             if(spawnTimer >= 2)
             {
-                Enemy tempEnemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 100);
+                Enemy tempEnemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.3f, 0.3f), 0, Color.White, 100);
                 enemies.Add(tempEnemy);
                 spawnTimer = 0;
             }
