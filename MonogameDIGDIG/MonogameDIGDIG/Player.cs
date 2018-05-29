@@ -35,7 +35,7 @@ namespace MonogameDIGDIG
             //moveDir = Vector2.Zero;
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            rectangle = new Rectangle((position - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            rectangle = new Rectangle((position).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
             playerColor = color;
             rotation = playerRotation;
             health = playerHealth;
@@ -62,6 +62,9 @@ namespace MonogameDIGDIG
                     //moveDir.X = -1;
                     position.X -= speed * deltaTime;
                 }
+
+                rectangle.Location = position.ToPoint();
+                rectangle.Offset(-offset);
                 //if (moveDir != Vector2.Zero)
                 //{
                 //    moveDir.Normalize();
@@ -81,6 +84,11 @@ namespace MonogameDIGDIG
                     BulletManager.AddBullet(TextureLibrary.GetTexture("triangle"), position, bulletDir, 400, new Vector2(0.2f, 0.2f), Owner.Player, Color.White);
                     attackTimer = 0;
                 }
+
+                if(health <= 0)
+                {
+                    alive = false;
+                }
             }
             else
             {
@@ -93,6 +101,26 @@ namespace MonogameDIGDIG
 
             spriteBatch.Draw(texture, position, null, playerColor, rotation, offset, scale, SpriteEffects.None, 0);
 
+        }
+
+        public void Damage(float someDamage)
+        {
+            health -= someDamage;
+        }
+
+        public Rectangle GetRectangle()
+        {
+            return rectangle;
+        }
+
+        public float GetHealth()
+        {
+            return health;
+        }
+
+        public void SetHealth(float someHealth)
+        {
+            health = someHealth;
         }
     }
 }

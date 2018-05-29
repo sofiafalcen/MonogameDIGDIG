@@ -19,9 +19,12 @@ namespace MonogameDIGDIG
         Color color;
         float speed;
         float rotation;
+        float health;
+        bool alive;
 
 
-        public Enemy(Texture2D enemyTexture, Vector2 enemyStartPos, float enemySpeed, Vector2 enemyScale, float enemyRotation, Color enemyColor)
+
+        public Enemy(Texture2D enemyTexture, Vector2 enemyStartPos, float enemySpeed, Vector2 enemyScale, float enemyRotation, Color enemyColor, float enemyHealth)
         {
             texture = enemyTexture;
             position = enemyStartPos;
@@ -29,19 +32,39 @@ namespace MonogameDIGDIG
             moveDir = Vector2.Zero;
             scale = enemyScale;
             offset = (enemyTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            rectangle = new Rectangle((enemyStartPos - offset).ToPoint(), (enemyTexture.Bounds.Size.ToVector2() * enemyScale).ToPoint());
+            rectangle = new Rectangle((enemyStartPos).ToPoint(), (enemyTexture.Bounds.Size.ToVector2() * enemyScale).ToPoint());
             color = enemyColor;
             rotation = enemyRotation;
+            health = enemyHealth;
+            alive = true;
         }
-        
-        public void Update(GameTime gameTime, Player player)
+
+        public void Update(GameTime gameTime, Player player, int windowHeight)
         {
+
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             moveDir.Y = 1;
             moveDir.Normalize();
             position += moveDir * pixelsToMove;
-            rectangle.Location = (position - offset).ToPoint();
+            rectangle.Location = position.ToPoint();
+            rectangle.Offset(-offset);
+
+            if(rectangle.Intersects(player.GetRectangle()) == true)
+            {
+                player.Damage(10f);
+            }
+
+
+        }
+
+        public void ChangeHealth(float healthMod)
+        {
+            health += healthMod;
+            if (health <= 0)
+            {
+                alive = false;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -58,5 +81,16 @@ namespace MonogameDIGDIG
         {
             return position;
         }
+
+        public bool GetIsAlive()
+        {
+            return alive;
+        }
+
+        public void SetAlive(bool isAlive)
+        {
+            alive = isAlive;
+        }
+
     }
 }

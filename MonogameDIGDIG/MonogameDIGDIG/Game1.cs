@@ -29,6 +29,7 @@ namespace MonogameDIGDIG
 
         int numEnemies;
         List<Enemy> enemies;
+        float spawnTimer = 0;
         Dictionary<string, Texture2D> textures;
 
      
@@ -47,7 +48,7 @@ namespace MonogameDIGDIG
             Randomizer.Init();
 
             player = new Player(triangleTexture, new Vector2(0, 400), 500, new Vector2(0.1f, 0.1f), 0, Color.White, 100, 1);
-            enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White);
+            enemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 100);
             enemies = new List<Enemy>();
 
             IsMouseVisible = true;
@@ -80,10 +81,32 @@ namespace MonogameDIGDIG
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            spawnTimer += deltaTime;
+
+            if(spawnTimer >= 2)
+            {
+                Enemy tempEnemy = new Enemy(TextureLibrary.GetTexture("enemy"), new Vector2(Randomizer.GetRandom(Window.ClientBounds.Width), -TextureLibrary.GetTexture("enemy").Height), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 100);
+                enemies.Add(tempEnemy);
+                spawnTimer = 0;
+            }
+
             player.Update(deltaTime, Keyboard.GetState(), Mouse.GetState(), Window.ClientBounds.Size);
-            enemy.Update(gameTime, player);
+            enemy.Update(gameTime, player, Window.ClientBounds.Height);
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Update(gameTime, player, Window.ClientBounds.Height);
+
+                if(enemies[i].GetIsAlive() == false || enemies[i].GetPosition().Y >= Window.ClientBounds.Height)
+                {
+                    enemies.RemoveAt(i);
+                    i--;
+                }
+            }
+
             BulletManager.Update(deltaTime, player, enemies);
-            base.Update(gameTime);         
+            base.Update(gameTime);
+           
         }
 
       
@@ -93,6 +116,11 @@ namespace MonogameDIGDIG
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             enemy.Draw(spriteBatch);
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Draw(spriteBatch);
+            }
 
             BulletManager.Draw(spriteBatch);
             spriteBatch.End();

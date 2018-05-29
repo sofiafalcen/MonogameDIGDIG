@@ -33,6 +33,10 @@ namespace MonogameDIGDIG
                             for(int j = 0; j < enemies.Count; j++)
                             {
                                 damage = bullets[i].Damage(enemies[j].GetRectangle());
+                                if (damage > 0)
+                                {
+                                    enemies[i].SetAlive(false);
+                                }
                             }
                         break;
                     }
@@ -56,5 +60,7 @@ namespace MonogameDIGDIG
         {
             windowSize = aWindowSize;
         }
+
     }
+    
 }
